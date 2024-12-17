@@ -1,0 +1,87 @@
+import os
+
+def maxXor(lo, hi, k):
+    """
+    Calculate the maximum XOR value of pairs (a, b) in the range [lo, hi] where XOR <= k.
+    
+    Parameters:
+    - lo (int): Lower bound of the range.
+    - hi (int): Upper bound of the range.
+    - k (int): Maximum allowable XOR value.
+    
+    Returns:
+    - int: The maximum XOR value within the given constraints.
+    """
+    max_value = 0  # Initialize the maximum XOR value
+
+    for a in range(lo, hi + 1):
+        for b in range(a, hi + 1):  # Ensure b >= a to avoid duplicates
+            xor_value = a ^ b  # Calculate the XOR
+            if xor_value <= k:
+                max_value = max(max_value, xor_value)  # Update maximum value
+
+    return max_value
+
+
+def minimumMoves(arr1, arr2):
+    """
+    Calculate the minimum moves needed to make two arrays identical.
+    A move is defined as incrementing or decrementing a single digit.
+
+    Parameters:
+    - arr1 (list): First array of integers.
+    - arr2 (list): Second array of integers.
+
+    Returns:
+    - int: Total moves required to make both arrays identical.
+    """
+    total_moves = 0  # Initialize the moves counter
+
+    # Compare corresponding numbers in both arrays
+    for num1, num2 in zip(arr1, arr2):
+        # Compare corresponding digits
+        for digit1, digit2 in zip(str(num1), str(num2)):
+            total_moves += abs(int(digit1) - int(digit2))  # Calculate digit difference
+
+    return total_moves
+
+
+def main():
+    """
+    Main function to provide a user-friendly menu for running maxXor or minimumMoves functions.
+    """
+    print("Select which function to run:")
+    print("1. maxXor")
+    print("2. minimumMoves")
+    choice = input("Enter your choice (1 or 2): ").strip()
+
+    if choice == "1":
+        # Inputs for maxXor
+        print("\nRunning maxXor function...")
+        lo = int(input("Enter the lower bound (lo): ").strip())
+        hi = int(input("Enter the upper bound (hi): ").strip())
+        k = int(input("Enter the maximum XOR value (k): ").strip())
+
+        result = maxXor(lo, hi, k)
+        print(f"Maximum XOR value: {result}")
+
+    elif choice == "2":
+        # Inputs for minimumMoves
+        print("\nRunning minimumMoves function...")
+        arr1_count = int(input("Enter the number of elements in the first array: ").strip())
+        arr1 = [int(input(f"Enter element {i + 1} for array 1: ").strip()) for i in range(arr1_count)]
+
+        arr2_count = int(input("Enter the number of elements in the second array: ").strip())
+        arr2 = [int(input(f"Enter element {i + 1} for array 2: ").strip()) for i in range(arr2_count)]
+
+        if arr1_count != arr2_count:
+            print("Error: Both arrays must have the same number of elements.")
+        else:
+            result = minimumMoves(arr1, arr2)
+            print(f"Total minimum moves: {result}")
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
+
+# Program Entry Point
+if __name__ == "__main__":
+    main()
